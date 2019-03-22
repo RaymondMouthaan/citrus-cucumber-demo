@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.mouthaan</groupId>
+    <artifactId>citrus-cucumber</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!--<spring.boot.version>2.0.3.RELEASE</spring.boot.version>-->
+        <!--<springframework.version>5.1.5-RELEASE</springframework.version>-->
+        <slf4j.version>1.7.25</slf4j.version>
+        <junit.version>4.12</junit.version>
+        <cucumber.version>3.0.2</cucumber.version>
+        <citrus.version>2.8.0</citrus.version>
+        <!--<todo.app.version>1.1.0</todo.app.version>-->
+
+        <spring.version>5.1.5.RELEASE</spring.version>
+
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.20.1</version>
+                <configuration>
+                    <failIfNoTests>false</failIfNoTests>
+                    <workingDirectory>${project.build.directory}</workingDirectory>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>3.0.0-M1</version>
+                <executions>
+                    <execution>
+                        <id>integration-tests</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>net.masterthought</groupId>
+                <artifactId>maven-cucumber-reporting</artifactId>
+                <version>4.5.0</version>
+                <executions>
+                    <execution>
+                        <id>execution</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <projectName>citrus-cucumber</projectName>
+                            <!-- optional, per documentation set this to "true" to bypass generation of Cucumber Reports entirely, defaults to false if not specified -->
+                            <skip>false</skip>
+                            <!-- output directory for the generated report -->
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <!-- optional, defaults to outputDirectory if not specified -->
+                            <inputDirectory>target/cucumber-reports</inputDirectory>
+                            <!--<cucumberOutput>${project.build.directory}/cucumber.json</cucumberOutput>-->
+                            <jsonFiles>
+                                <!-- supports wildcard or name pattern -->
+                                <parm>**/*.json</parm>
+                            </jsonFiles>
+                            <!--&lt;!&ndash; optional, defaults to outputDirectory if not specified &ndash;&gt;-->
+                            <!--<classificationDirectory>${project.build.directory}/classifications-->
+                            <!--</classificationDirectory>-->
+                            <!--<classificationFiles>-->
+                                <!--&lt;!&ndash; supports wildcard or name pattern &ndash;&gt;-->
+                                <!--<param>sample.properties</param>-->
+                                <!--<param>other.properties</param>-->
+                            <!--</classificationFiles>-->
+                            <parallelTesting>false</parallelTesting>
+                            <!-- optional, set true to fail build on test failures -->
+                            <checkBuildResult>false</checkBuildResult>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/net.masterthought/cucumber-reporting -->
+        <dependency>
+            <groupId>net.masterthought</groupId>
+            <artifactId>cucumber-reporting</artifactId>
+            <version>4.5.1</version>
+        </dependency>
+
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Test scoped dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Cucumber -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-spring</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <!-- Citrus -->
+        <dependency>
+            <groupId>com.consol.citrus</groupId>
+            <artifactId>citrus-core</artifactId>
+            <version>${citrus.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.consol.citrus</groupId>
+            <artifactId>citrus-java-dsl</artifactId>
+            <version>${citrus.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.consol.citrus</groupId>
+            <artifactId>citrus-http</artifactId>
+            <version>${citrus.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.consol.citrus</groupId>
+            <artifactId>citrus-cucumber</artifactId>
+            <version>${citrus.version}</version>
+            <scope>test</scope>
+        </dependency><dependency>
+        <groupId>com.consol.citrus</groupId>
+        <artifactId>citrus-java-dsl</artifactId>
+        <version>2.8.0</version>
+        <scope>compile</scope>
+    </dependency>
+        <dependency>
+            <groupId>com.consol.citrus</groupId>
+            <artifactId>citrus-http</artifactId>
+            <version>2.8.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.consol.citrus</groupId>
+            <artifactId>citrus-core</artifactId>
+            <version>2.8.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>consol-labs-snapshots</id>
+            <url>http://labs.consol.de/maven/snapshots-repository/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>interval:10080</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <!--<profiles>-->
+    <!--<profile>-->
+    <!--<id>todo-app-container</id>-->
+    <!--<activation>-->
+    <!--<property>-->
+    <!--<name>docker</name>-->
+    <!--</property>-->
+    <!--</activation>-->
+    <!--<build>-->
+    <!--<plugins>-->
+    <!--<plugin>-->
+    <!--<groupId>io.fabric8</groupId>-->
+    <!--<artifactId>docker-maven-plugin</artifactId>-->
+    <!--<executions>-->
+    <!--<execution>-->
+    <!--<id>start</id>-->
+    <!--<phase>pre-integration-test</phase>-->
+    <!--<goals>-->
+    <!--<goal>start</goal>-->
+    <!--</goals>-->
+    <!--</execution>-->
+    <!--<execution>-->
+    <!--<id>stop</id>-->
+    <!--<phase>post-integration-test</phase>-->
+    <!--<goals>-->
+    <!--<goal>stop</goal>-->
+    <!--</goals>-->
+    <!--</execution>-->
+    <!--</executions>-->
+    <!--</plugin>-->
+    <!--</plugins>-->
+    <!--</build>-->
+    <!--</profile>-->
+
+    <!--<profile>-->
+    <!--<id>todo-app-embedded</id>-->
+    <!--<activation>-->
+    <!--<property>-->
+    <!--<name>embedded</name>-->
+    <!--</property>-->
+    <!--</activation>-->
+    <!--<build>-->
+    <!--<plugins>-->
+    <!--<plugin>-->
+    <!--<groupId>org.springframework.boot</groupId>-->
+    <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+    <!--<configuration>-->
+    <!--<fork>true</fork>-->
+    <!--</configuration>-->
+    <!--<executions>-->
+    <!--<execution>-->
+    <!--<id>pre-integration-test</id>-->
+    <!--<goals>-->
+    <!--<goal>start</goal>-->
+    <!--</goals>-->
+    <!--</execution>-->
+    <!--<execution>-->
+    <!--<id>post-integration-test</id>-->
+    <!--<goals>-->
+    <!--<goal>stop</goal>-->
+    <!--</goals>-->
+    <!--</execution>-->
+    <!--</executions>-->
+    <!--</plugin>-->
+    <!--</plugins>-->
+    <!--</build>-->
+    <!--</profile>-->
+    <!--</profiles>-->
+</project>
